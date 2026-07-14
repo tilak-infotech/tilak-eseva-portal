@@ -7,7 +7,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Identity",
     description: "Aadhaar, PAN, Voter ID, Passport, Driving License and other national identity services.",
     icon: "IdCard",
-    accent: "from-saffron/20 to-amber-500/10 text-saffron",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "UIDAI / NSDL / MEA / ECI / MoRTH",
   },
   {
@@ -16,7 +16,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Tax & GST",
     description: "Income Tax Return filing, GST registration & returns, TDS, refunds and compliance.",
     icon: "ReceiptIndianRupee",
-    accent: "from-emerald-500/20 to-green-500/10 text-emerald-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "CBDT / CBIC",
   },
   {
@@ -25,7 +25,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Citizenship",
     description: "Passport, Visa, OCI, FRRO registration and citizenship services.",
     icon: "Plane",
-    accent: "from-sky-500/20 to-cyan-500/10 text-sky-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "Ministry of External Affairs / MEA",
   },
   {
@@ -34,7 +34,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Land & Property",
     description: "Land records (Bhulekh), mutation, property registration, encumbrance certificates.",
     icon: "LandPlot",
-    accent: "from-amber-600/20 to-yellow-600/10 text-amber-600",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "State Revenue Departments",
   },
   {
@@ -43,7 +43,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Education",
     description: "Board exams, entrance tests, national & state scholarships, fellowships.",
     icon: "GraduationCap",
-    accent: "from-violet-500/20 to-purple-500/10 text-violet-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "MoE / AICTE / UGC / NCERT",
   },
   {
@@ -52,7 +52,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Health",
     description: "Ayushman Bharat, CGHS, medical & disability certificates, birth/death records.",
     icon: "HeartPulse",
-    accent: "from-rose-500/20 to-pink-500/10 text-rose-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "MoHFW / State Health Depts",
   },
   {
@@ -61,7 +61,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Employment",
     description: "EPF, ESI, e-Shram, NCS, apprenticeships and labour welfare services.",
     icon: "HardHat",
-    accent: "from-orange-500/20 to-amber-500/10 text-orange-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "MoLE / EPFO / ESIC",
   },
   {
@@ -70,7 +70,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Welfare",
     description: "PM-KISAN, PMAY, Ujjwala, Jan Dhan, Mudra and other central welfare schemes.",
     icon: "HandHeart",
-    accent: "from-saffron/20 to-orange-500/10 text-saffron",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "Various Central Ministries",
   },
   {
@@ -79,7 +79,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Business",
     description: "Udyam, FSSAI, trade licenses, IEC, company incorporation, IP & certifications.",
     icon: "Building2",
-    accent: "from-teal-500/20 to-cyan-500/10 text-teal-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "MoMSME / MCA / FSSAI",
   },
   {
@@ -88,7 +88,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Transport",
     description: "RC, Driving License, permits, vehicle tax, fitness, FASTag and PUC.",
     icon: "Car",
-    accent: "from-blue-500/20 to-indigo-500/10 text-blue-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "MoRTH / VAHAN / SARATHI",
   },
   {
@@ -97,7 +97,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Utilities",
     description: "Electricity, water, LPG/PNG gas, telecom and broadband connections.",
     icon: "PlugZap",
-    accent: "from-yellow-500/20 to-amber-500/10 text-yellow-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "State DISCOMs / Utilities",
   },
   {
@@ -106,7 +106,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Police",
     description: "Online FIR, Police Clearance Certificate, verifications and cyber-crime reporting.",
     icon: "ShieldCheck",
-    accent: "from-slate-500/20 to-zinc-500/10 text-slate-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "MHA / State Police",
   },
   {
@@ -115,7 +115,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Agriculture",
     description: "Kisan Credit Card, crop insurance, soil health, e-NAM and farm subsidies.",
     icon: "Wheat",
-    accent: "from-lime-500/20 to-green-500/10 text-lime-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "MoA&FW / DA&FW",
   },
   {
@@ -124,7 +124,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Pensions",
     description: "Old-age, widow, disability pensions, NPS, EPS and family pensions.",
     icon: "PiggyBank",
-    accent: "from-fuchsia-500/20 to-pink-500/10 text-fuchsia-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "MoRD / EPFO / PFRDA",
   },
   {
@@ -133,7 +133,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Elections",
     description: "Voter ID, electoral roll services, objections and election complaints.",
     icon: "Vote",
-    accent: "from-indigo-500/20 to-blue-500/10 text-indigo-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "Election Commission of India",
   },
   {
@@ -142,7 +142,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Senior Citizens",
     description: "Senior citizen ID, pensions, concessions, RVY and maintenance tribunal.",
     icon: "Users",
-    accent: "from-purple-500/20 to-violet-500/10 text-purple-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "MoSJ&E",
   },
   {
@@ -151,7 +151,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Women & Child",
     description: "Sukanya Samriddhi, PMMVY, Beti Bachao, One Stop Centres and CARA adoption.",
     icon: "Baby",
-    accent: "from-pink-500/20 to-rose-500/10 text-pink-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "MoWCD",
   },
   {
@@ -160,7 +160,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Certificates",
     description: "Caste, income, residence, birth, death, marriage, legal heir & EWS certificates.",
     icon: "ScrollText",
-    accent: "from-cyan-500/20 to-teal-500/10 text-cyan-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "State Revenue / Local Bodies",
   },
   {
@@ -169,7 +169,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Court & Legal",
     description: "eCourts case status, judgments, e-filing, legal aid and Lok Adalat.",
     icon: "Scale",
-    accent: "from-stone-500/20 to-amber-700/10 text-stone-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "eCommittee / Supreme Court",
   },
   {
@@ -178,7 +178,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Defence",
     description: "ECHS, CSD, ex-servicemen pensions, AGNIPATH and recruitment services.",
     icon: "Medal",
-    accent: "from-red-500/20 to-orange-600/10 text-red-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "MoD / DESW",
   },
   {
@@ -187,7 +187,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Postal & Savings",
     description: "India Post savings, PLI, speed post, RD/FD/NSC/KVP and postal services.",
     icon: "Mail",
-    accent: "from-red-600/20 to-rose-600/10 text-red-600",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "Department of Posts",
   },
   {
@@ -196,7 +196,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "RTI & Grievances",
     description: "CPGRAMS, RTI filing & appeals, PMO grievances and public grievance portals.",
     icon: "MessageSquareWarning",
-    accent: "from-amber-500/20 to-orange-500/10 text-amber-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "DARPG / DoPT",
   },
   {
@@ -205,7 +205,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Municipal",
     description: "Property tax, water tax, trade license, building approvals and civic services.",
     icon: "Building",
-    accent: "from-emerald-600/20 to-teal-600/10 text-emerald-600",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "Urban Local Bodies",
   },
   {
@@ -214,7 +214,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Disaster",
     description: "NDRF, disaster relief, flood/cyclone compensation and volunteer registration.",
     icon: "Siren",
-    accent: "from-red-500/20 to-rose-500/10 text-red-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "NDMA / NDRF",
   },
   {
@@ -223,7 +223,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Tourism",
     description: "ASI monument tickets, Incredible India, tourist guide licenses and events.",
     icon: "Camera",
-    accent: "from-orange-400/20 to-amber-500/10 text-orange-400",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "MoT / ASI / MoC",
   },
   {
@@ -232,7 +232,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Environment",
     description: "Forest NOC, EIA clearance, wildlife permits, tree felling & pollution consents.",
     icon: "Trees",
-    accent: "from-green-600/20 to-emerald-600/10 text-green-600",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "MoEFCC",
   },
   {
@@ -241,7 +241,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Science & Tech",
     description: "Patents, trademarks, copyrights, research grants and innovation programs.",
     icon: "FlaskConical",
-    accent: "from-indigo-500/20 to-violet-500/10 text-indigo-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "DST / CSIR / DBT",
   },
   {
@@ -250,7 +250,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Foreign Trade",
     description: "IEC, DGFT schemes, RoDTEP, EPCG, advance authorization and export inspection.",
     icon: "Ship",
-    accent: "from-cyan-600/20 to-blue-600/10 text-cyan-600",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "DGFT / MoC&I",
   },
   {
@@ -259,7 +259,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Cooperatives",
     description: "Cooperative society registration, multi-state cooperatives and PACS.",
     icon: "Handshake",
-    accent: "from-lime-600/20 to-green-600/10 text-lime-600",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "Mo Cooperation",
   },
   {
@@ -268,7 +268,7 @@ export const CATEGORIES: ServiceCategory[] = [
     shortName: "Digital",
     description: "DigiLocker, UMANG, BharatNet, Aadhaar-mobile linking and digital literacy.",
     icon: "Smartphone",
-    accent: "from-blue-500/20 to-sky-500/10 text-blue-500",
+    accent: "from-neutral-100 to-neutral-200/50 text-neutral-900 dark:from-neutral-900/50 dark:to-neutral-800/20 dark:text-neutral-100",
     ministry: "MeitY / NeGD",
   },
 ];

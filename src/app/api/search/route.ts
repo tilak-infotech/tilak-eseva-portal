@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ALL_SERVICES, CATEGORIES } from "@/lib/services-data";
+import { ALL_SERVICES } from "@/lib/services-data";
+import { CATEGORIES } from "@/lib/categories";
 
 export const dynamic = "force-static";
 

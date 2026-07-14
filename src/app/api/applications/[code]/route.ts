@@ -26,6 +26,55 @@ export async function GET(
       return NextResponse.json({ error: "Application not found" }, { status: 404 });
     }
 
+    // Sync status from Google Sheets/Apps Script if configured
+    const appscriptUrl = process.env.APPSCRIPT_URL;
+    if (appscriptUrl && appscriptUrl.includes("macros/s/")) {
+      try {
+        const sheetRes = await fetch(`${appscriptUrl}?action=status&code=${code}`, {
+          signal: AbortSignal.timeout(3500), // 3.5 seconds timeout
+        });
+        if (sheetRes.ok) {
+          const sheetData = await sheetRes.json();
+          if (sheetData.success && sheetData.status) {
+            const statusFromSheet = sheetData.status;
+            const adminNotesFromSheet = sheetData.adminNotes || null;
+            const reportSentAtFromSheet = sheetData.reportSentAt || null;
+
+            if (statusFromSheet !== application.status) {
+              await db.application.update({
+                where: { id: application.id },
+                data: {
+                  status: statusFromSheet,
+                  adminNotes: adminNotesFromSheet || application.adminNotes,
+                  reportSentAt: reportSentAtFromSheet ? new Date(reportSentAtFromSheet) : application.reportSentAt,
+                  statusHistory: {
+                    create: {
+                      status: statusFromSheet,
+                      note: `Status synchronized from Google Sheets: ${adminNotesFromSheet || "Updated by administrator"}`,
+                    },
+                  },
+                },
+              });
+
+              // Update in-memory references
+              application.status = statusFromSheet;
+              application.adminNotes = adminNotesFromSheet || application.adminNotes;
+              if (reportSentAtFromSheet) {
+                application.reportSentAt = new Date(reportSentAtFromSheet);
+              }
+              const updatedHistory = await db.statusEvent.findMany({
+                where: { applicationId: application.id },
+                orderBy: { createdAt: "asc" },
+              });
+              application.statusHistory = updatedHistory;
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Apps Script status sync error:", err);
+      }
+    }
+
     return NextResponse.json({
       appCode: application.appCode,
       serviceName: application.serviceName,
@@ -85,7 +134,7 @@ export async function POST(
       return NextResponse.json({ error: "Application not found" }, { status: 404 });
     }
 
-    const existing = await db.rating.findUnique({ where: { applicationId: application.id } });
+    const existing = await db.rating.findFirst({ where: { applicationId: application.id } });
     if (existing) {
       await db.rating.update({
         where: { id: existing.id },
@@ -98,6 +147,23 @@ export async function POST(
           stars,
           comment: body.comment?.slice(0, 500) || null,
         },
+      });
+    }
+
+    // Forward rating to Google Sheets/Apps Script
+    const appscriptUrl = process.env.APPSCRIPT_URL;
+    if (appscriptUrl && appscriptUrl.includes("macros/s/")) {
+      fetch(appscriptUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "rating",
+          appCode: code,
+          rating: stars,
+          comment: body.comment || "",
+        }),
+      }).catch((err) => {
+        console.error("Apps Script rating forward error:", err);
       });
     }
 

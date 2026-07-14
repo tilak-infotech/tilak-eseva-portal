@@ -141,9 +141,9 @@ export default function Home() {
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6">
           <a href="#top" className="flex items-center gap-2.5">
-            <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-saffron via-amber-500 to-india-green text-white shadow-lg">
+            <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black border border-border shadow-lg">
               <Landmark className="h-5 w-5" />
-              <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-background text-[8px] font-bold text-saffron">
+              <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-background text-[8px] font-bold text-foreground">
                 TI
               </span>
             </div>
@@ -304,7 +304,7 @@ export default function Home() {
             <div className="mb-6 flex items-end justify-between">
               <div>
                 <h2 className="flex items-center gap-2 text-xl font-bold sm:text-2xl">
-                  <TrendingUp className="h-5 w-5 text-saffron" />
+                  <TrendingUp className="h-5 w-5 text-foreground" />
                   Most Popular Services
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">
@@ -333,7 +333,7 @@ export default function Home() {
                         <DynamicIcon name={cat?.icon || "Landmark"} className="h-5 w-5" />
                       </div>
                       {s.online && (
-                        <Badge variant="secondary" className="gap-1 bg-india-green/10 text-xs text-india-green">
+                        <Badge variant="secondary" className="gap-1 bg-neutral-100 dark:bg-neutral-900 text-xs text-muted-foreground border">
                           <Globe className="h-2.5 w-2.5" /> Online
                         </Badge>
                       )}
@@ -345,7 +345,7 @@ export default function Home() {
                     <div className="mt-auto flex items-center justify-between pt-1 text-xs">
                       <span className="text-muted-foreground">
                         {s.fee === 0 ? (
-                          <span className="font-medium text-india-green">Free</span>
+                          <span className="font-medium text-foreground">Free</span>
                         ) : (
                           <>₹{s.fee}</>
                         )}
@@ -415,7 +415,7 @@ export default function Home() {
                   onClick={() => setOnlineOnly((v) => !v)}
                   className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
                     onlineOnly
-                      ? "border-india-green bg-india-green/10 text-india-green"
+                      ? "border-primary bg-primary/10 text-primary"
                       : "border-border bg-card/40 text-muted-foreground hover:text-foreground"
                   }`}
                 >
@@ -549,7 +549,7 @@ export default function Home() {
                 },
               ].map((step, i) => (
                 <div key={i} className="glass relative rounded-2xl p-5">
-                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-saffron/20 to-india-green/10 text-saffron">
+                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-neutral-100 dark:bg-neutral-900 text-foreground border">
                     <step.icon className="h-6 w-6" />
                   </div>
                   <h3 className="mb-1 text-sm font-bold">{step.title}</h3>
@@ -613,11 +613,11 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col justify-center gap-3 rounded-xl border bg-card/40 p-5">
                   <div className="flex items-center gap-2 text-sm">
-                    <Clock className="h-4 w-4 text-saffron" />
+                    <Clock className="h-4 w-4 text-muted-foreground" />
                     <span><strong>Hours:</strong> Mon–Sat, 9 AM – 7 PM IST</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
-                    <ShieldCheck className="h-4 w-4 text-india-green" />
+                    <ShieldCheck className="h-4 w-4 text-muted-foreground" />
                     <span><strong>SLA:</strong> 2-hour assisted delivery</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
@@ -645,7 +645,7 @@ export default function Home() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-saffron to-india-green text-white">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black">
                   <Landmark className="h-4 w-4" />
                 </div>
                 <span className="font-bold">Tilak E-Seva Portal</span>
@@ -692,10 +692,10 @@ export default function Home() {
               </h4>
               <ul className="space-y-1.5 text-xs">
                 <li className="flex items-center gap-1.5">
-                  <Phone className="h-3 w-3 text-saffron" /> +91 70196 31612
+                  <Phone className="h-3 w-3 text-muted-foreground" /> +91 70196 31612
                 </li>
                 <li className="flex items-center gap-1.5">
-                  <Mail className="h-3 w-3 text-india-green" /> tilakinfotech@gmail.com
+                  <Mail className="h-3 w-3 text-muted-foreground" /> tilakinfotech@gmail.com
                 </li>
                 <li className="flex items-center gap-1.5">
                   <MessageCircle className="h-3 w-3 text-primary" /> WhatsApp Support
@@ -707,7 +707,7 @@ export default function Home() {
           <div className="flex flex-col items-center justify-between gap-2 text-xs text-muted-foreground sm:flex-row">
             <p>© {new Date().getFullYear()} Tilak Infotech. All rights reserved.</p>
             <p className="text-center sm:text-right">
-              Made with <span className="text-saffron">♥</span> for Digital India ·{" "}
+              Made for Digital India ·{" "}
               {TOTAL_SERVICES} services · {CATEGORIES.length} categories
             </p>
           </div>
@@ -719,7 +719,7 @@ export default function Home() {
         href="https://wa.me/917019631612?text=Hello%20Tilak%20Infotech%2C%20I%20need%20help%20with%20a%20government%20service"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-india-green text-white shadow-lg shadow-india-green/30 transition hover:scale-110 pulse-glow"
+        className="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black shadow-lg transition hover:scale-110 pulse-glow"
         aria-label="Chat on WhatsApp"
       >
         <MessageCircle className="h-7 w-7" />
@@ -771,7 +771,7 @@ function ServiceCard({
             <DynamicIcon name={cat?.icon || "Landmark"} className="h-4 w-4" />
           </div>
           {service.online && (
-            <Badge variant="secondary" className="gap-1 bg-india-green/10 text-[10px] text-india-green">
+            <Badge variant="secondary" className="gap-1 bg-neutral-100 dark:bg-neutral-900 text-[10px] text-muted-foreground border">
               <Globe className="h-2.5 w-2.5" /> Online
             </Badge>
           )}
@@ -786,7 +786,7 @@ function ServiceCard({
       <div className="mt-3 flex items-center justify-between border-t pt-2">
         <span className="text-xs">
           {service.fee === 0 ? (
-            <span className="font-medium text-india-green">Free</span>
+            <span className="font-medium text-foreground">Free</span>
           ) : (
             <>
               <span className="text-muted-foreground">Govt </span>

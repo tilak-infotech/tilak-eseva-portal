@@ -72,9 +72,28 @@ export function ApplyDialog({ service, open, onOpenChange, onTrack }: Props) {
     }
   }, [open]);
 
-  if (!service) return null;
+  const totalFee = service ? service.fee + service.serviceCharge : 0;
 
-  const totalFee = service.fee + service.serviceCharge;
+  const whatsappUrl = React.useMemo(() => {
+    if (!result?.appCode || !service) return "";
+    const msg = `Hello Tilak Infotech,
+
+I have submitted an application via the Tilak E-Seva Portal. Here are my details:
+
+*Tracking Code:* ${result.appCode}
+*Service:* ${service.name}
+*Applicant Name:* ${applicantName.trim()}
+*Mobile/WhatsApp:* ${contactNumber.trim()}
+*Email:* ${email.trim() || "Not provided"}
+*Form Details:* ${details.trim()}
+*UPI Reference:* ${paymentRef.trim()}
+*Total Fee:* ₹${totalFee}
+
+Please process my application. Thank you!`;
+    return `https://wa.me/917019631612?text=${encodeURIComponent(msg)}`;
+  }, [result, service, applicantName, contactNumber, email, details, paymentRef, totalFee]);
+
+  if (!service) return null;
 
   const validateStep = (s: number): boolean => {
     if (s === 0) {
@@ -137,6 +156,26 @@ export function ApplyDialog({ service, open, onOpenChange, onTrack }: Props) {
       setResult(data);
       setStep(STEPS.length - 1);
       toast.success(`Application ${data.appCode} submitted!`);
+
+      // Auto-redirect to WhatsApp after 2 seconds
+      const msg = `Hello Tilak Infotech,
+
+I have submitted an application via the Tilak E-Seva Portal. Here are my details:
+
+*Tracking Code:* ${data.appCode}
+*Service:* ${service.name}
+*Applicant Name:* ${applicantName.trim()}
+*Mobile/WhatsApp:* ${contactNumber.trim()}
+*Email:* ${email.trim() || "Not provided"}
+*Form Details:* ${details.trim()}
+*UPI Reference:* ${paymentRef.trim()}
+*Total Fee:* ₹${totalFee}
+
+Please process my application. Thank you!`;
+      const url = `https://wa.me/917019631612?text=${encodeURIComponent(msg)}`;
+      setTimeout(() => {
+        window.location.href = url;
+      }, 2000);
     } catch {
       toast.error("Network error. Please check your connection and retry.");
     } finally {
@@ -371,9 +410,7 @@ export function ApplyDialog({ service, open, onOpenChange, onTrack }: Props) {
                 </Button>
                 <Button asChild variant="outline" className="gap-2">
                   <a
-                    href={`https://wa.me/917019631612?text=${encodeURIComponent(
-                      `Hello Tilak Infotech, I just submitted application ${result.appCode} for ${result.serviceName}.`
-                    )}`}
+                    href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

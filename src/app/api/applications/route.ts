@@ -16,7 +16,7 @@ const ApplicationSchema = z.object({
     .string()
     .regex(/^(\+91)?[6-9]\d{9}$/, "Enter a valid 10-digit Indian mobile number"),
   email: z.string().email().optional().or(z.literal("")),
-  formData: z.record(z.string()).refine((v) => Object.keys(v).length <= MAX_FORM_FIELDS, {
+  formData: z.record(z.string(), z.string()).refine((v) => Object.keys(v).length <= MAX_FORM_FIELDS, {
     message: "Too many form fields",
   }),
   attachments: z.array(z.string()).max(10).optional(),
@@ -81,7 +81,6 @@ export async function POST(req: NextRequest) {
         attachments: attachments?.join(",") || null,
         paymentRef: paymentRef || null,
         feeAmount: feeAmount || String(service.fee + service.serviceCharge),
-        status: "Submitted",
         statusHistory: {
           create: { status: "Submitted", note: "Application submitted through portal" },
         },
@@ -90,6 +89,29 @@ export async function POST(req: NextRequest) {
     });
 
     incrementServiceApplication(serviceSlug).catch(() => {});
+
+    // Forward to Google Sheets/Apps Script
+    const appscriptUrl = process.env.APPSCRIPT_URL;
+    if (appscriptUrl && appscriptUrl.includes("macros/s/")) {
+      fetch(appscriptUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "submit",
+          appCode: application.appCode,
+          applicantName: application.applicantName,
+          contactNumber: application.contactNumber,
+          email: application.email || "",
+          serviceSlug: application.serviceSlug,
+          serviceName: application.serviceName,
+          formData: formData.details || "",
+          paymentRef: application.paymentRef || "",
+          feeAmount: application.feeAmount || "",
+        }),
+      }).catch((err) => {
+        console.error("Apps Script forward error:", err);
+      });
+    }
 
     return NextResponse.json(
       {
