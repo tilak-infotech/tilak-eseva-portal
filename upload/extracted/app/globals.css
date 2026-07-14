@@ -1,0 +1,327 @@
+@import "tailwindcss";
+
+:root {
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --apple-blue: #000000;
+  --apple-blue-hover: #1f1f1f;
+  --apple-grey-light: #f5f5f7;
+  --apple-grey-border: rgba(0, 0, 0, 0.1);
+}
+
+html.dark {
+  --apple-blue: #ffffff;
+  --apple-blue-hover: #f5f5f7;
+  --apple-grey-light: #09090b;
+  --apple-grey-border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--apple-grey-light);
+  color: #1d1d1f;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html.dark body {
+  background-color: #000000;
+  color: #f5f5f7;
+}
+
+/* Common Interactive buttons in Apple Style (Smooth curved corners, elegant weight, crisp typography) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px; /* Standard clean Apple rectangular with small curve border radius */
+  font-weight: 505;
+  transition: opacity 0.15s ease-in-out;
+  cursor: pointer;
+  user-select: none;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  padding: 10px 20px;
+  min-height: 40px;
+  border: 1px solid transparent;
+}
+
+.btn:active {
+  transform: scale(0.99);
+}
+
+.btn-primary {
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+}
+
+html.dark .btn-primary {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #ffffff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.btn-primary:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: #1d1d1f;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+html.dark .btn-outline {
+  background-color: transparent;
+  color: #f5f5f7;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.btn-outline:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+html.dark .btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Apple Segment Control */
+.apple-segments {
+  display: flex;
+  background-color: rgba(120, 120, 128, 0.08);
+  border-radius: 8px;
+  padding: 2px;
+  border: none;
+}
+
+html.dark .apple-segments {
+  background-color: rgba(120, 120, 128, 0.16);
+}
+
+.apple-segment-btn {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  padding: 6px 0;
+  text-align: center;
+  border-radius: 6px;
+  transition: all 0.12s ease-in-out;
+  color: #555555;
+  background-color: transparent;
+}
+
+html.dark .apple-segment-btn {
+  color: #a1a1aa;
+}
+
+.apple-segment-btn.active {
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+}
+
+html.dark .apple-segment-btn.active {
+  background-color: #27272a;
+  color: #ffffff;
+  box-shadow: none;
+  font-weight: 600;
+}
+
+/* Structural Grids */
+.btn-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .btn-row {
+    flex-direction: column-reverse;
+  }
+}
+
+/* Form labels and fields config */
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: #555555;
+  margin-bottom: 6px;
+}
+
+html.dark .form-label {
+  color: #a1a1aa;
+}
+
+.rating-textarea {
+  width: 100%;
+  min-height: 85px;
+  background-color: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #1d1d1f;
+  resize: vertical;
+  transition: all 0.15s;
+}
+
+html.dark .rating-textarea {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f5f5f7;
+}
+
+.rating-textarea:focus {
+  outline: none;
+  background-color: #ffffff;
+  border-color: var(--apple-blue);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+html.dark .rating-textarea:focus {
+  background-color: #1c1c1e;
+  border-color: var(--apple-blue);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+/* Modals with Apple premium clean structure */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease-out;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-box {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+html.dark .modal-box {
+  background: #09090b;
+  border: 1px solid #27272a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.05);
+  color: #1d1d1f;
+  font-size: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+html.dark .modal-close {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f5f5f7;
+}
+
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+html.dark .modal-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Hide native browser default visual inputs */
+input[type="file"] {
+  display: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar,
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar,
+html,
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Custom marquee for scrolling government tickers */
+.marquee-wrapper {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+}
+.marquee-content {
+  display: flex;
+  gap: 3rem;
+  animation: marquee-scroll 55s linear infinite;
+  min-width: 100%;
+}
+@keyframes marquee-scroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Elegant geometric grid backgrounds */
+.grid-bg {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+}
+html.light .grid-bg {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1.5px, transparent 1.5px);
+}
+
+/* Pulsating visual glow effects */
+.pulse {
+  animation: pulse-keyframes 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulse-keyframes {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .88; transform: scale(0.97); }
+}
+
+/* Simple fade in class */
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

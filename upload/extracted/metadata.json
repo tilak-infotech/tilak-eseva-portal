@@ -1,0 +1,6 @@
+{
+  "name": "Tilak E-Seva Portal",
+  "description": "All Services. One Platform. Powered by Trust. Citizen and business digital portals by Tilak Infotech.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

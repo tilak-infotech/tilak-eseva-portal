@@ -1,0 +1,109 @@
+// Tilak E-Seva Portal — Prisma schema
+// SQLite backend for applications, status tracking, ratings, grievances, contacts.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// A citizen's application submitted through the portal for a specific service.
+model Application {
+  id            String   @id @default(cuid())
+  /// Human-friendly tracking code (6-digit), shown to the user.
+  appCode       String   @unique
+  /// Slug of the service from the static services catalog.
+  serviceSlug   String
+  serviceName   String
+  category      String
+  /// Citizen contact (Indian mobile, +91XXXXXXXXXX).
+  contactNumber String
+  /// Optional email.
+  email         String?
+  /// Applicant full name.
+  applicantName String
+  /// JSON string of submitted form fields (key/value pairs).
+  formData      String
+  /// Optional comma-separated list of uploaded file names (we only store names/refs, not binaries).
+  attachments   String?
+  /// UPI / payment reference provided by user.
+  paymentRef    String?
+  /// Fee amount in INR (numeric string to be safe across sqlite).
+  feeAmount     String?
+  status        String   @default("Submitted")
+  /// Internal admin notes.
+  adminNotes    String?
+  submittedAt   DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  reportSentAt  DateTime?
+
+  statusHistory StatusEvent[]
+  ratings       Rating[]
+  grievance     Grievance?
+
+  @@index([serviceSlug])
+  @@index([contactNumber])
+  @@index([appCode])
+}
+
+/// Timeline of status changes for an application.
+model StatusEvent {
+  id            String   @id @default(cuid())
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  status        String
+  note          String?
+  createdAt     DateTime @default(now())
+
+  @@index([applicationId])
+}
+
+/// Citizen rating/feedback for a completed application.
+model Rating {
+  id            String   @id @default(cuid())
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  stars         Int
+  comment       String?
+  createdAt     DateTime @default(now())
+
+  @@index([applicationId])
+}
+
+/// A grievance / complaint tied (optionally) to an application.
+model Grievance {
+  id            String   @id @default(cuid())
+  applicationId String?  @unique
+  application   Application? @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  contactNumber String
+  message       String
+  category      String   @default("General")
+  status        String   @default("Open")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([contactNumber])
+}
+
+/// General contact / lead messages (not tied to a specific application).
+model Contact {
+  id        String   @id @default(cuid())
+  name      String
+  email     String?
+  phone     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+/// Lightweight analytics counter (popular services, search terms, etc.)
+model ServiceStat {
+  id         String   @id @default(cuid())
+  serviceSlug String  @unique
+  views      Int      @default(0)
+  applications Int    @default(0)
+  updatedAt  DateTime @updatedAt
+}

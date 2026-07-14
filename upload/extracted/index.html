@@ -1,0 +1,2404 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="description" content="Aadhaar & PAN Card Link Check Portal by Tilak Infotech" />
+  <title>Aadhaar–PAN Link Check | Tilak Infotech</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================================
+       1. THEME VARIABLES (Neo-Sovereign Slate Glass)
+       ========================================================================= */
+    :root[data-theme="dark"] {
+      --bg: #07090E;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #111827 0%, #07090E 100%);
+      --surface: rgba(17, 24, 39, 0.7);
+      --surface-overlay: rgba(15, 23, 42, 0.95);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.16);
+      --border-focus: rgba(59, 130, 246, 0.6);
+      --text: #F3F4F6;
+      --text-muted: #9CA3AF;
+      --text-hint: #6B7280;
+      --accent: #3B82F6;
+      --accent-hover: #2563EB;
+      --accent-glow: rgba(59, 130, 246, 0.15);
+      --success: #10B981;
+      --success-glow: rgba(16, 185, 129, 0.15);
+      --error: #EF4444;
+      --error-glow: rgba(239, 68, 68, 0.15);
+      --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+      --spotlight: radial-gradient(600px circle at var(--x, 0px) var(--y, 0px), rgba(255,255,255,0.03), transparent 40%);
+    }
+
+    :root[data-theme="light"] {
+      --bg: #F3F4F6;
+      --bg-gradient: radial-gradient(circle at 50% 0%, #E5E7EB 0%, #F3F4F6 100%);
+      --surface: rgba(255, 255, 255, 0.75);
+      --surface-overlay: rgba(255, 255, 255, 0.98);
+      --border: rgba(0, 0, 0, 0.08);
+      --border-hover: rgba(0, 0, 0, 0.15);
+      --border-focus: rgba(37, 99, 235, 0.6);
+      --text: #111827;
+      --text-muted: #4B5563;
+      --text-hint: #9CA3AF;
+      --accent: #2563EB;
+      --accent-hover: #1D4ED8;
+      --accent-glow: rgba(37, 99, 235, 0.1);
+      --success: #059669;
+      --success-glow: rgba(5, 150, 105, 0.1);
+      --error: #DC2626;
+      --error-glow: rgba(220, 38, 38, 0.1);
+      --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
+      --spotlight: radial-gradient(600px circle at var(--x, 0px) var(--y, 0px), rgba(0,0,0,0.015), transparent 40%);
+    }
+
+    /* Standard variables */
+    :root {
+      --font-sans: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+      --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 16px;
+      
+      --space-1: 4px;  --space-2: 8px;   --space-3: 12px;
+      --space-4: 16px; --space-5: 20px;  --space-6: 24px;
+      --space-8: 32px; --space-10: 40px; --space-12: 48px;
+
+      --text-xs: 11px;  --text-sm: 13px;  --text-base: 15px;
+      --text-md: 17px;  --text-lg: 20px;  --text-xl: 24px;
+      --text-2xl: 32px; --text-display: 48px;
+      --max-w: 640px;
+    }
+
+    /* =========================================================================
+       2. RESET & BASE
+       ========================================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    
+    body {
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      color: var(--text);
+      background: var(--bg);
+      background-image: var(--bg-gradient);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--spotlight);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    button, input, textarea {
+      font-family: inherit;
+      color: inherit;
+      background: none;
+      border: none;
+      outline: none;
+    }
+
+    button { cursor: pointer; }
+    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--accent-hover); }
+    img { max-width: 100%; display: block; }
+    * { -webkit-tap-highlight-color: transparent; }
+
+    /* =========================================================================
+       3. STRUCTURE & CONTAINERS
+       ========================================================================= */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--space-4);
+      position: relative;
+      z-index: 2;
+    }
+    @media (min-width: 768px) {
+      .container { padding: 0 var(--space-6); }
+    }
+
+    .card {
+      background: var(--surface);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6) var(--space-5);
+      box-shadow: var(--card-shadow);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    @media (min-width: 768px) {
+      .card { padding: var(--space-8); }
+    }
+
+    /* =========================================================================
+       4. HEADER & NAV TABS
+       ========================================================================= */
+    .site-header {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: var(--space-4) 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    :root[data-theme="light"] .site-header {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .logo-icon-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--accent-glow);
+      border: 1px solid var(--border-focus);
+      border-radius: var(--radius-md);
+      color: var(--accent);
+    }
+
+    .logo-title {
+      font-size: var(--text-md);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      line-height: 1.2;
+    }
+
+    .logo-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    /* Light/Dark Toggle */
+    .theme-toggle {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      color: var(--text);
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .theme-toggle:hover {
+      border-color: var(--border-hover);
+      transform: scale(1.03);
+    }
+    .theme-toggle:active {
+      transform: scale(0.97);
+    }
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+
+    /* Tab Bar */
+    .tab-bar {
+      display: flex;
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: var(--radius-md);
+      padding: var(--space-1);
+      margin-top: var(--space-5);
+      border: 1px solid var(--border);
+    }
+    :root[data-theme="dark"] .tab-bar {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      transition: background 0.2s, color 0.2s;
+      text-align: center;
+    }
+
+    .tab-btn.active {
+      color: var(--text);
+      background: var(--surface);
+      box-shadow: var(--card-shadow);
+      border: 1px solid var(--border);
+    }
+
+    /* =========================================================================
+       5. COMPONENTS
+       ========================================================================= */
+       
+    /* 5.1 — Step Indicator */
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      padding: var(--space-5) 0 var(--space-6);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      gap: var(--space-2);
+    }
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      flex: 1;
+      min-width: 60px;
+    }
+    .step-circle {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: all 0.3s;
+      box-shadow: var(--card-shadow);
+    }
+    .step-circle.active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #FFF;
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+    .step-circle.done {
+      border-color: var(--success);
+      background: var(--success);
+      color: #FFF;
+      box-shadow: 0 0 12px var(--success-glow);
+    }
+    .step-label {
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.2;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .step-label.active { color: var(--text); font-weight: 700; }
+    .step-label.done { color: var(--text-muted); }
+    
+    .step-line {
+      flex: 1;
+      height: 2px;
+      background: var(--border);
+      min-width: var(--space-4);
+      margin-bottom: 22px;
+      transition: background 0.3s;
+    }
+    .step-line.done { background: var(--success); }
+
+    /* 5.2 — Instructions Box */
+    .instructions-box {
+      background: var(--accent-glow);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: var(--space-4) var(--space-5);
+      margin-bottom: var(--space-6);
+    }
+    .instructions-box .inst-title {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-2);
+      color: var(--text);
+    }
+    .instructions-box ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .instructions-box li {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
+    .instructions-box li svg {
+      width: 14px;
+      height: 14px;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    /* 5.3 — Upload Zone */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      background: rgba(128, 128, 128, 0.02);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8) var(--space-6);
+      text-align: center;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-3);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .upload-zone:hover {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+    }
+    .upload-zone.drag-over {
+      border-style: solid;
+      border-color: var(--accent);
+      background: var(--accent-glow);
+    }
+    .upload-icon-svg {
+      width: 44px;
+      height: 44px;
+      color: var(--text-muted);
+      transition: color 0.2s, transform 0.2s;
+    }
+    .upload-zone:hover .upload-icon-svg {
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .upload-text { font-size: var(--text-sm); color: var(--text-muted); }
+    .upload-btns {
+      display: flex;
+      gap: var(--space-3);
+      width: 100%;
+      flex-direction: column;
+      margin-top: var(--space-2);
+    }
+    @media (min-width: 480px) {
+      .upload-btns { flex-direction: row; }
+    }
+
+    /* Target input files hidden */
+    input[type="file"] { display: none; }
+
+    .upload-preview-wrap {
+      display: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--surface-overlay);
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s;
+    }
+    .upload-preview-wrap.show { display: block; }
+    .upload-preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border);
+      font-size: var(--text-sm);
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .upload-preview-header span { font-weight: 600; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; max-width: 70%; }
+    
+    .upload-preview-img {
+      width: 100%;
+      max-height: 240px;
+      object-fit: contain;
+      background: rgba(0, 0, 0, 0.1);
+      padding: var(--space-2);
+    }
+
+    /* 5.4 — Form Inputs & Fields */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      margin-bottom: var(--space-5);
+    }
+    .form-label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .form-hint {
+      font-size: var(--text-xs);
+      color: var(--text-hint);
+      margin-top: -4px;
+    }
+    .phone-input-wrap, .text-input-wrap {
+      display: flex;
+      background: var(--surface-overlay);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .phone-input-wrap:focus-within, .text-input-wrap:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .phone-prefix {
+      padding: var(--space-3) var(--space-4);
+      background: rgba(0, 0, 0, 0.05);
+      border-right: 1px solid var(--border);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .form-input {
+      flex: 1;
+      padding: var(--space-3) var(--space-4);
+      font-size: 16px;
+      background: transparent;
+      color: var(--text);
+      width: 100%;
+    }
+    .field-error {
+      font-size: var(--text-sm);
+      color: var(--error);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      margin-top: var(--space-1);
+      display: none;
+    }
+    .field-error.show { display: flex; animation: slideIn 0.2s forwards; }
+
+    /* 5.5 — Buttons */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      width: 100%;
+      padding: var(--space-3) var(--space-5);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-radius: var(--radius-md);
+      transition: background 0.2s, border-color 0.2s, transform 0.1s, box-shadow 0.2s;
+    }
+    .btn:active { transform: scale(0.98); }
+    
+    .btn-primary {
+      background: var(--accent);
+      color: #FFF;
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+    .btn-primary:disabled {
+      background: var(--border);
+      color: var(--text-hint);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: var(--surface);
+    }
+    .btn-outline:hover {
+      border-color: var(--border-hover);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    :root[data-theme="light"] .btn-outline:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    
+    .btn-ghost {
+      color: var(--text-muted);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-decoration: underline;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-ghost:hover { color: var(--text); }
+    
+    .btn-row {
+      display: flex;
+      gap: var(--space-3);
+      flex-direction: column-reverse;
+    }
+    @media (min-width: 480px) {
+      .btn-row { flex-direction: row; }
+      .btn-row .btn { flex: 1; }
+    }
+
+    /* 5.6 — Interactive QR Payment Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+    }
+    .modal-overlay.show { display: flex; }
+    
+    .modal-box {
+      background: var(--surface-overlay);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      max-width: 420px;
+      width: 100%;
+      position: relative;
+      box-shadow: var(--card-shadow);
+      animation: zoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-close {
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+      font-size: 20px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .modal-title {
+      font-size: var(--text-md);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: var(--space-1);
+    }
+    .modal-amount {
+      font-size: var(--text-2xl);
+      font-weight: 800;
+      text-align: center;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      margin-bottom: var(--space-4);
+    }
+    .qr-wrap {
+      width: 210px;
+      height: 210px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin: 0 auto var(--space-4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFFFFF;
+      padding: var(--space-2);
+      box-shadow: var(--card-shadow);
+    }
+    .qr-wrap img { width: 100%; height: 100%; object-fit: contain; }
+    .upi-id {
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      margin-bottom: var(--space-4);
+    }
+    .timer-wrap {
+      text-align: center;
+      margin-bottom: var(--space-4);
+      padding: var(--space-2) var(--space-4);
+      background: rgba(0, 0, 0, 0.02);
+      border-radius: var(--radius-md);
+    }
+    .timer-count {
+      font-size: var(--text-lg);
+      font-family: var(--font-mono);
+      font-weight: 700;
+    }
+    .timer-bar-wrap {
+      height: 4px;
+      background: var(--border);
+      margin-top: var(--space-2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .timer-bar {
+      height: 100%;
+      background: var(--accent);
+      width: 100%;
+      transition: width 1s linear;
+    }
+
+    /* 5.7 — Progress Tracker Nodes (Status Check) */
+    .progress-wrap {
+      padding: var(--space-6) 0 var(--space-4);
+    }
+    .progress-nodes {
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+    }
+    .progress-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      gap: var(--space-2);
+      position: relative;
+      z-index: 2;
+    }
+    .prog-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--surface-overlay);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-xs);
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: all 0.3s;
+    }
+    .prog-circle.done {
+      border-color: var(--success);
+      background: var(--success);
+      color: #FFF;
+      box-shadow: 0 0 10px var(--success-glow);
+    }
+    .prog-circle.active {
+      border-color: var(--accent);
+      background: var(--surface-overlay);
+      color: var(--accent);
+      border-width: 3px;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+    .prog-label {
+      font-size: 10px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--text-muted);
+      line-height: 1.3;
+      font-weight: 500;
+    }
+    .prog-label.done { color: var(--success); font-weight: 600; }
+    .prog-label.active { color: var(--accent); font-weight: 700; }
+    
+    .prog-line {
+      flex: 1;
+      height: 3px;
+      background: var(--border);
+      margin-top: 11px;
+      align-self: flex-start;
+      position: relative;
+      z-index: 1;
+      transition: background 0.3s;
+    }
+    .prog-line.done { background: var(--success); }
+
+    /* 5.8 — App Code Display Card */
+    .code-display-wrap {
+      border: 1px solid var(--border);
+      background: var(--surface-overlay);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-align: center;
+      margin: var(--space-5) 0;
+      box-shadow: var(--card-shadow);
+      position: relative;
+    }
+    .code-label {
+      font-size: var(--text-xs);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: var(--space-3);
+      font-weight: 700;
+    }
+    .code-digits {
+      font-family: var(--font-mono);
+      font-size: var(--text-display);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text);
+      word-break: break-all;
+      text-shadow: 0 0 10px var(--accent-glow);
+    }
+    @media (max-width: 480px) {
+      .code-digits { font-size: 34px; }
+    }
+
+    /* 5.9 — Status Checking Details Card */
+    .status-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      background: var(--surface);
+    }
+    .status-card-header {
+      background: var(--accent-glow);
+      color: var(--text);
+      padding: var(--space-4) var(--space-5);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+    .status-card-body { padding: var(--space-4) var(--space-5); }
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--border);
+      font-size: var(--text-sm);
+    }
+    .status-row:last-child { border-bottom: none; }
+    .status-row-key { color: var(--text-muted); font-weight: 500; }
+    .status-row-val { font-weight: 600; text-align: right; }
+    .status-badge {
+      display: inline-block;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-sm);
+      background: var(--accent);
+      color: #FFF;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: 0 2px 6px var(--accent-glow);
+    }
+    .status-badge.success-badge {
+      background: var(--success);
+      box-shadow: 0 2px 6px var(--success-glow);
+    }
+
+    /* 5.10 — Onboarding Elements */
+    .onboard-hero {
+      text-align: center;
+      padding: var(--space-8) 0 var(--space-5);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo-hero-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      background: var(--accent-glow);
+      border: 1px solid var(--border-focus);
+      border-radius: var(--radius-lg);
+      color: var(--accent);
+      margin-bottom: var(--space-4);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    .onboard-title {
+      font-size: var(--text-xl);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: var(--space-2);
+      line-height: 1.25;
+    }
+    .onboard-subtitle {
+      font-size: var(--text-xs);
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .process-steps { padding: var(--space-4) 0; }
+    .process-step {
+      display: flex;
+      gap: var(--space-4);
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .process-step:last-child { border-bottom: none; }
+    .step-num {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--accent);
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+    .step-content h3 { font-size: var(--text-sm); font-weight: 700; margin-bottom: 2px; }
+    .step-content p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.5; }
+    .onboard-actions { padding: var(--space-5) 0 var(--space-6); }
+    .onboard-already {
+      text-align: center;
+      margin-top: var(--space-4);
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+    }
+    .onboard-already a { font-weight: 600; text-decoration: underline; }
+
+    /* 5.11 — Rating Component */
+    .star-row {
+      display: flex;
+      gap: var(--space-2);
+      margin: var(--space-3) 0 var(--space-4);
+    }
+    .star-btn {
+      font-size: 32px;
+      line-height: 1;
+      cursor: pointer;
+      color: var(--text-hint);
+      transition: transform 0.1s, color 0.2s;
+    }
+    .star-btn:hover { transform: scale(1.1); }
+    .star-btn.selected { color: #F59E0B; text-shadow: 0 0 10px rgba(245, 158, 11, 0.3); }
+    .rating-textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface-overlay);
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-base);
+      color: var(--text);
+      resize: vertical;
+      min-height: 80px;
+      transition: border-color 0.2s;
+    }
+    .rating-textarea:focus { border-color: var(--accent); }
+
+    /* 5.12 — Floating Complaint FAB Button */
+    .complaint-fab {
+      position: fixed;
+      bottom: var(--space-5);
+      right: var(--space-4);
+      z-index: 200;
+      background: var(--surface-overlay);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      box-shadow: var(--card-shadow);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .complaint-fab:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .complaint-fab svg { width: 14px; height: 14px; color: var(--accent); }
+    @media (max-width: 480px) {
+      .complaint-fab .fab-label { display: none; }
+      .complaint-fab { padding: var(--space-3); border-radius: 50%; width: 44px; height: 44px; justify-content: center; }
+    }
+
+    /* 5.13 — Screens panel animation transitions */
+    .screen { display: none; }
+    .screen.active { display: block; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .step-panel { display: none; padding: var(--space-4) 0 80px; }
+    .step-panel.active { display: block; animation: slideIn 0.3s forwards; }
+
+    .section-head { margin-bottom: var(--space-5); }
+    .section-head h2 { font-size: var(--text-lg); font-weight: 700; line-height: 1.3; margin-bottom: var(--space-1); }
+    .section-head p { font-size: var(--text-sm); color: var(--text-muted); }
+
+    .success-icon-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--success-glow);
+      border: 2px solid var(--success);
+      color: var(--success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-4);
+      box-shadow: 0 0 20px var(--success-glow);
+    }
+
+    .sla-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin: var(--space-6) 0;
+    }
+    .sla-box p { font-size: var(--text-sm); color: var(--text-muted); }
+    .sla-box strong { color: var(--text); }
+    .whatsapp-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      font-weight: 700;
+      font-size: var(--text-sm);
+      padding: var(--space-3) var(--space-4);
+      border: 1px solid var(--success);
+      background: var(--success-glow);
+      color: var(--success);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-3);
+      width: 100%;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .code-input-area { padding: var(--space-4) 0; }
+    .code-field-wrap {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      background: var(--surface-overlay);
+    }
+    .code-field-wrap:focus-within { border-color: var(--accent); }
+    .code-input {
+      flex: 1;
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-xl);
+      font-family: var(--font-mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .code-check-btn {
+      background: var(--accent);
+      color: #FFF;
+      padding: 0 var(--space-5);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .code-check-btn:hover { background: var(--accent-hover); }
+
+    .loading-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-3);
+      padding: var(--space-8);
+      text-align: center;
+    }
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .privacy-notice {
+      background: rgba(0, 0, 0, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      font-size: var(--text-xs);
+      color: var(--text-hint);
+      line-height: 1.5;
+    }
+
+    /* Keyframes */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes zoomIn { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* =========================================================================
+       6. DEVICE-SPECIFIC UTILITIES
+       ========================================================================= */
+    .desktop-only { display: none; }
+    .mobile-only { display: block; }
+    @media (min-width: 768px) {
+      .desktop-only { display: block; }
+      .mobile-only { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===========================================================================
+     ONBOARDING SCREEN
+     =========================================================================== -->
+<div id="screen-onboard" class="screen active">
+  <div class="container" style="max-width:540px; padding-top:40px; padding-bottom:60px;">
+    <div class="card" style="margin-top:20px;">
+      <div class="onboard-hero">
+        <div class="logo-hero-wrap">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:28px; height:28px;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <h1 class="onboard-title">Aadhaar &amp; PAN<br>Link Check Portal</h1>
+        <p class="onboard-subtitle">Tilak Infotech Verification</p>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Upload Documents</h3>
+            <p>Upload clear photographs of your Aadhaar Card and PAN Card. All details must be legible.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>Provide Contact Details</h3>
+            <p>Provide your active Indian WhatsApp number so we can securely deliver your PDF report.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>Process Payment — ₹25</h3>
+            <p>Pay ₹25 via secure UPI QR code or mobile deeplink and upload your transaction receipt.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3>Report Delivery</h3>
+            <p>Receive your officially verified Aadhaar–PAN status report within 2 hours guaranteed.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="onboard-actions">
+        <button class="btn btn-primary" id="btn-begin">
+          Begin Application
+          <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width:16px; height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+        </button>
+        <p class="onboard-already">
+          Already applied? <a href="#" id="link-check-status">Check report status &rarr;</a>
+        </p>
+      </div>
+
+      <div class="privacy-notice">
+        <strong>Privacy Assurance:</strong> Your files are protected by high-grade Google Cloud transport encryption. Document photographs are accessed solely by Tilak Infotech verification agents and are automatically purged from retention logs.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================================================================
+     MAIN SYSTEM SCREEN
+     =========================================================================== -->
+<div id="screen-app" class="screen">
+  
+  <!-- Sticky Header -->
+  <div class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <div class="logo-area">
+          <div class="logo-icon-wrap">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:20px; height:20px;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <div>
+            <div class="logo-title">TILAK INFOTECH</div>
+            <div class="logo-sub">Aadhaar · PAN Status Portal</div>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <div style="font-size:11px; color:var(--text-muted); text-align:right; line-height:1.2;" class="desktop-only">
+            Manual Support<br><strong style="color:var(--text);">+91 70196 31612</strong>
+          </div>
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle visual theme">
+            <svg id="theme-icon" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab Selection System -->
+      <div class="tab-bar">
+        <button class="tab-btn active" id="tab-btn-apply" onclick="switchTab('apply')">New Application</button>
+        <button class="tab-btn" id="tab-btn-status" onclick="switchTab('status')">Track Status</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── APPLICATION SUBMISSION TAB ──────────────────────────────────────── -->
+  <div id="tab-apply" class="container" style="padding-top:20px; padding-bottom:100px;">
+    
+    <!-- Step Progress Bar Indicator -->
+    <div class="step-indicator" id="step-indicator">
+      <div class="step-item">
+        <div class="step-circle active" id="sc-1">1</div>
+        <div class="step-label active" id="sl-1">Aadhaar</div>
+      </div>
+      <div class="step-line" id="sline-1"></div>
+      <div class="step-item">
+        <div class="step-circle" id="sc-2">2</div>
+        <div class="step-label" id="sl-2">PAN</div>
+      </div>
+      <div class="step-line" id="sline-2"></div>
+      <div class="step-item">
+        <div class="step-circle" id="sc-3">3</div>
+        <div class="step-label" id="sl-3">Contact</div>
+      </div>
+      <div class="step-line" id="sline-3"></div>
+      <div class="step-item">
+        <div class="step-circle" id="sc-4">4</div>
+        <div class="step-label" id="sl-4">Payment</div>
+      </div>
+      <div class="step-line" id="sline-4"></div>
+      <div class="step-item">
+        <div class="step-circle" id="sc-5">5</div>
+        <div class="step-label" id="sl-5">Proof</div>
+      </div>
+    </div>
+
+    <div class="card">
+      
+      <!-- STEP 1: Aadhaar Upload Panel -->
+      <div class="step-panel active" id="step-1">
+        <div class="section-head">
+          <h2>Upload Aadhaar Card</h2>
+          <p>Please upload a high-resolution, well-lit copy of your Aadhaar Card.</p>
+        </div>
+
+        <div class="instructions-box">
+          <div class="inst-title">Upload Guidelines</div>
+          <ul>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+              Ensure the 12-digit Aadhaar number is perfectly legible.
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+              Avoid glares, blurriness, or cut-off corners.
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+              Supported: JPG, PNG, WEBP — Maximum file footprint: 5MB.
+            </li>
+          </ul>
+        </div>
+
+        <!-- Interactive Drag Zone -->
+        <div id="aadhaar-drop-zone" class="upload-zone desktop-only"
+             ondragover="handleDragOver(event,'aadhaar')"
+             ondragleave="handleDragLeave(event,'aadhaar')"
+             ondrop="handleDrop(event,'aadhaar')"
+             onclick="document.getElementById('aadhaar-file-input').click()">
+          <svg class="upload-icon-svg" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+          </svg>
+          <div class="upload-text">Drag &amp; drop file here, or click to choose</div>
+          <button class="btn btn-outline" style="max-width:200px; padding:6px 12px; font-size:12px;" onclick="event.stopPropagation(); document.getElementById('aadhaar-file-input').click()">Browse Local Files</button>
+        </div>
+
+        <div class="upload-btns mobile-only" id="aadhaar-mobile-btns">
+          <button class="btn btn-outline" onclick="triggerCamera('aadhaar')">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px; height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" /></svg>
+            Capture Photo
+          </button>
+          <button class="btn btn-outline" onclick="triggerGallery('aadhaar')">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px; height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.008-.75h-.008v.008h.008V7.5z" /></svg>
+            Upload Gallery
+          </button>
+        </div>
+
+        <input type="file" id="aadhaar-file-input" accept="image/*" onchange="handleFileSelect(this,'aadhaar')" />
+        <input type="file" id="aadhaar-camera-input" accept="image/*" capture="environment" onchange="handleFileSelect(this,'aadhaar')" />
+
+        <div class="upload-preview-wrap" id="aadhaar-preview-wrap" style="margin-top:16px;">
+          <div class="upload-preview-header">
+            <span id="aadhaar-file-name">document.jpg</span>
+            <button class="btn-ghost" onclick="removeUpload('aadhaar')">✕ Remove</button>
+          </div>
+          <img class="upload-preview-img" id="aadhaar-preview-img" alt="Aadhaar upload preview" />
+        </div>
+
+        <div class="field-error" id="aadhaar-error">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:14px; height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+          Aadhaar Card photograph submission is mandatory.
+        </div>
+
+        <div style="margin-top:24px;">
+          <button class="btn btn-primary" id="btn-next-1" onclick="goToStep(2)">
+            Proceed to PAN Card
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width:14px; height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 2: PAN Upload Panel -->
+      <div class="step-panel" id="step-2">
+        <div class="section-head">
+          <h2>Upload PAN Card</h2>
+          <p>Please upload a high-resolution, well-lit copy of your PAN Card.</p>
+        </div>
+
+        <div class="instructions-box">
+          <div class="inst-title">Upload Guidelines</div>
+          <ul>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+              10-character PAN number must be perfectly visible (e.g. ABCDE1234F).
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+              Full card margins must be fully inside the snapshot boundaries.
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+              Supported: JPG, PNG, WEBP — Maximum file footprint: 5MB.
+            </li>
+          </ul>
+        </div>
+
+        <div id="pan-drop-zone" class="upload-zone desktop-only"
+             ondragover="handleDragOver(event,'pan')"
+             ondragleave="handleDragLeave(event,'pan')"
+             ondrop="handleDrop(event,'pan')"
+             onclick="document.getElementById('pan-file-input').click()">
+          <svg class="upload-icon-svg" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+          </svg>
+          <div class="upload-text">Drag &amp; drop file here, or click to choose</div>
+          <button class="btn btn-outline" style="max-width:200px; padding:6px 12px; font-size:12px;" onclick="event.stopPropagation(); document.getElementById('pan-file-input').click()">Browse Local Files</button>
+        </div>
+
+        <div class="upload-btns mobile-only" id="pan-mobile-btns">
+          <button class="btn btn-outline" onclick="triggerCamera('pan')">📷 Capture Photo</button>
+          <button class="btn btn-outline" onclick="triggerGallery('pan')">🖼 Upload Gallery</button>
+        </div>
+
+        <input type="file" id="pan-file-input" accept="image/*" onchange="handleFileSelect(this,'pan')" />
+        <input type="file" id="pan-camera-input" accept="image/*" capture="environment" onchange="handleFileSelect(this,'pan')" />
+
+        <div class="upload-preview-wrap" id="pan-preview-wrap" style="margin-top:16px;">
+          <div class="upload-preview-header">
+            <span id="pan-file-name">document.jpg</span>
+            <button class="btn-ghost" onclick="removeUpload('pan')">✕ Remove</button>
+          </div>
+          <img class="upload-preview-img" id="pan-preview-img" alt="PAN upload preview" />
+        </div>
+
+        <div class="field-error" id="pan-error">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:14px; height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+          PAN Card photograph submission is mandatory.
+        </div>
+
+        <div class="btn-row" style="margin-top:24px;">
+          <button class="btn btn-outline" onclick="goToStep(1)">&larr; Back</button>
+          <button class="btn btn-primary" id="btn-next-2" onclick="goToStep(3)">
+            Proceed to Contact
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width:14px; height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Contact details -->
+      <div class="step-panel" id="step-3">
+        <div class="section-head">
+          <h2>Contact Number</h2>
+          <p>Please enter your primary WhatsApp active mobile number. Your verification report PDF will be delivered directly here.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="phone-input">Mobile Number</label>
+          <div class="phone-input-wrap">
+            <span class="phone-prefix">+91</span>
+            <input
+              type="tel"
+              id="phone-input"
+              class="form-input"
+              placeholder="98765 43210"
+              maxlength="10"
+              autocomplete="tel"
+              inputmode="numeric"
+              oninput="this.value=this.value.replace(/\D/g,'')"
+            />
+          </div>
+          <div class="field-error" id="phone-error">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:14px; height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+            Please enter a valid 10-digit Indian mobile number.
+          </div>
+          <p class="form-hint">Our manual support team will contact you on this number in case the document uploads are blurry.</p>
+        </div>
+
+        <div class="privacy-notice" style="margin-top:24px;">
+          <strong>No Spam Pledge:</strong> Your contact number is encrypted inside our systems. We do not transmit advertisement notifications.
+        </div>
+
+        <div class="btn-row" style="margin-top:24px;">
+          <button class="btn btn-outline" onclick="goToStep(2)">&larr; Back</button>
+          <button class="btn btn-primary" onclick="goToStep(4)">
+            Proceed to Payment
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width:14px; height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Payment Panel -->
+      <div class="step-panel" id="step-4">
+        <div class="section-head">
+          <h2>Verification Fee</h2>
+          <p>Complete payment of ₹25 via secure UPI to submit your verification request.</p>
+        </div>
+
+        <div style="text-align:center; padding:32px 0 24px;">
+          <div style="font-size:var(--text-xs); color:var(--text-muted); text-transform:uppercase; letter-spacing:0.1em; font-weight:700;">Amount Payable</div>
+          <div style="font-size:56px; font-weight:800; font-family:var(--font-mono); color:var(--accent); line-height:1.2; margin:4px 0 16px;">₹25.00</div>
+          <p style="font-size:var(--text-sm); color:var(--text-muted); max-width:320px; margin:0 auto 24px;">This fee covers the secure cloud infrastructure processing and manual validation by our expert verification team.</p>
+
+          <!-- Desktop scanner button -->
+          <button class="btn btn-primary desktop-only" onclick="openQRModal()" id="btn-pay-desktop" style="max-width:320px; margin:0 auto;">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:18px; height:18px;"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 15h.008v.008H15V15zm0 2.25h.008v.008H15v-.008zM17.25 15h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zM15 19.5h.008v.008H15V19.5zm0-4.5h.008v.008H15V15z" /></svg>
+            Scan Payment QR Code
+          </button>
+
+          <!-- Mobile App Launch Button -->
+          <a href="#" class="btn btn-primary mobile-only" id="btn-pay-mobile" onclick="onMobilePayClick(event)" style="max-width:320px; margin:0 auto;">
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width:18px; height:18px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182 1.154-.879 3.023-.879 4.178 0m-3.923 8.27h3.49" /></svg>
+            Pay Now via UPI
+          </a>
+        </div>
+
+        <div class="paid-confirm" id="paid-confirm" style="display:none; margin-top:8px;">
+          <div style="border-top:1px dashed var(--border); padding-top:20px; text-align:center;">
+            <p style="font-size:var(--text-sm); color:var(--success); font-weight:600; margin-bottom:12px; display:flex; align-items:center; justify-content:center; gap:4px;">
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width:16px; height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              Payment initiated! Proceed to verify transaction proof.
+            </p>
+            <button class="btn btn-primary" onclick="goToStep(5)" style="max-width:320px; margin:0 auto;">
+              Upload Payment Screenshot
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width:14px; height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="btn-row" style="margin-top:24px;">
+          <button class="btn btn-outline" onclick="goToStep(3)">&larr; Back</button>
+        </div>
+      </div>
+
+      <!-- STEP 5: Payment Proof Upload Panel -->
+      <div class="step-panel" id="step-5">
+        <div class="section-head">
+          <h2>Transaction Receipt</h2>
+          <p>Please upload a screenshot of your ₹25 successful transaction confirmation.</p>
+        </div>
+
+        <div class="instructions-box">
+          <div class="inst-title">Screenshot guidelines</div>
+          <ul>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+              Verify the amount of ₹25 is clearly visible.
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+              Transaction Reference / UPI Ref / UTR number must be legible.
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+              File must be under 5MB (JPG, PNG, WEBP).
+            </li>
+          </ul>
+        </div>
+
+        <div id="payment-drop-zone" class="upload-zone desktop-only"
+             ondragover="handleDragOver(event,'payment')"
+             ondragleave="handleDragLeave(event,'payment')"
+             ondrop="handleDrop(event,'payment')"
+             onclick="document.getElementById('payment-file-input').click()">
+          <svg class="upload-icon-svg" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+          </svg>
+          <div class="upload-text">Drag &amp; drop file here, or click to choose</div>
+          <button class="btn btn-outline" style="max-width:200px; padding:6px 12px; font-size:12px;" onclick="event.stopPropagation(); document.getElementById('payment-file-input').click()">Browse Local Files</button>
+        </div>
+
+        <div class="upload-btns mobile-only" id="payment-mobile-btns">
+          <button class="btn btn-outline" onclick="triggerCamera('payment')">📷 Capture Screenshot</button>
+          <button class="btn btn-outline" onclick="triggerGallery('payment')">🖼 Upload Gallery</button>
+        </div>
+
+        <input type="file" id="payment-file-input" accept="image/*" onchange="handleFileSelect(this,'payment')" />
+        <input type="file" id="payment-camera-input" accept="image/*" capture="environment" onchange="handleFileSelect(this,'payment')" />
+
+        <div class="upload-preview-wrap" id="payment-preview-wrap" style="margin-top:16px;">
+          <div class="upload-preview-header">
+            <span id="payment-file-name">receipt.jpg</span>
+            <button class="btn-ghost" onclick="removeUpload('payment')">✕ Remove</button>
+          </div>
+          <img class="upload-preview-img" id="payment-preview-img" alt="Payment screenshot preview" />
+        </div>
+
+        <div class="field-error" id="payment-error">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:14px; height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+          A screenshot showing transaction proof is required.
+        </div>
+
+        <div class="btn-row" style="margin-top:24px;">
+          <button class="btn btn-outline" onclick="goToStep(4)">&larr; Back</button>
+          <button class="btn btn-primary" id="btn-submit" onclick="submitApplication()">
+            Submit Application
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px; height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          </button>
+        </div>
+
+        <div id="submit-loading" style="display:none; margin-top:16px;">
+          <div class="loading-wrap">
+            <div class="spinner"></div>
+            <div style="font-size:var(--text-sm); font-weight:600;">Encrypting documents &amp; transmitting request...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6: Success Screen Panel -->
+      <div class="step-panel" id="step-6">
+        <div style="text-align:center; padding:20px 0;">
+          <div class="success-icon-wrap">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:36px; height:36px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+          </div>
+          
+          <h2 style="font-size:24px; font-weight:800; color:var(--text); margin-bottom:4px;">Application Received!</h2>
+          <p style="font-size:var(--text-sm); color:var(--text-muted); margin-bottom:24px;">Your verification query is now queued in manual processing.</p>
+
+          <div class="code-display-wrap">
+            <div class="code-label">Tracking Verification Code</div>
+            <div class="code-digits t-mono" id="success-code">------</div>
+            
+            <button class="btn btn-outline" onclick="copyCode()" id="btn-copy-code" style="margin:20px auto 0; max-width:240px; padding:8px 16px;">
+              Copy Code
+            </button>
+          </div>
+
+          <div class="sla-box">
+            <p>Verification reports are sent on average in <strong>less than 2 hours</strong>. Status changes can be queried in real-time in the <strong>Track Status</strong> tab above.</p>
+            <a href="https://wa.me/917019631612" class="whatsapp-link" target="_blank" rel="noopener">
+              💬 Contact Support WhatsApp
+            </a>
+          </div>
+
+          <button class="btn btn-primary" style="margin-top:20px;" onclick="switchTab('status')">
+            Go to Status Tracker
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width:14px; height:14px;"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /tab-apply -->
+
+  <!-- ── APPLICATION TRACK STATUS TAB ────────────────────────────────────── -->
+  <div id="tab-status" class="container" style="display:none; padding-top:20px; padding-bottom:100px;">
+    <div class="card">
+      <div class="code-input-area">
+        <h2 style="font-size:var(--text-lg); font-weight:800; margin-bottom:4px;">Aadhaar-PAN Verification Status</h2>
+        <p style="font-size:var(--text-sm); color:var(--text-muted); margin-bottom:20px;">Input the 6-digit tracking code issued at submission.</p>
+
+        <div class="code-field-wrap">
+          <input
+            type="text"
+            class="code-input"
+            id="status-code-input"
+            placeholder="e.g. 847291"
+            maxlength="6"
+            inputmode="numeric"
+            oninput="this.value=this.value.replace(/\D/g,'')"
+          />
+          <button class="code-check-btn" onclick="checkStatus()">
+            Query
+          </button>
+        </div>
+        <div class="field-error" id="status-error" style="margin-top:8px;"></div>
+      </div>
+
+      <!-- Live query spinner -->
+      <div id="status-loading" style="display:none; padding:32px 0;">
+        <div class="loading-wrap">
+          <div class="spinner"></div>
+          <div style="font-size:var(--text-sm); font-weight:600;">Querying Google Database...</div>
+        </div>
+      </div>
+
+      <!-- Status Result Render Structure -->
+      <div id="status-result" style="display:none; margin-top:20px;">
+        <div class="status-card">
+          <div class="status-card-header">Application Reference: #<span id="res-code"></span></div>
+          <div class="status-card-body">
+            <div class="status-row">
+              <span class="status-row-key">Timestamp Received</span>
+              <span class="status-row-val" id="res-submitted">—</span>
+            </div>
+            <div class="status-row">
+              <span class="status-row-key">Masked Mobile Contact</span>
+              <span class="status-row-val" id="res-contact">—</span>
+            </div>
+            <div class="status-row">
+              <span class="status-row-key">Current Phase</span>
+              <span class="status-row-val"><span class="status-badge" id="res-status">Submitted</span></span>
+            </div>
+            <div class="status-row" id="res-notes-row" style="display:none;">
+              <span class="status-row-key">Report Notes</span>
+              <span class="status-row-val" id="res-notes" style="color:var(--accent); font-weight:700;">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Horizontal Step Progress -->
+        <div class="progress-wrap">
+          <div class="progress-nodes" id="progress-nodes">
+            <div class="progress-node">
+              <div class="prog-circle" id="pn-1">1</div>
+              <div class="prog-label" id="pl-1">Submitted</div>
+            </div>
+            <div class="prog-line" id="pline-1"></div>
+            <div class="progress-node">
+              <div class="prog-circle" id="pn-2">2</div>
+              <div class="prog-label" id="pl-2">Verified</div>
+            </div>
+            <div class="prog-line" id="pline-2"></div>
+            <div class="progress-node">
+              <div class="prog-circle" id="pn-3">3</div>
+              <div class="prog-label" id="pl-3">Reviewing</div>
+            </div>
+            <div class="prog-line" id="pline-3"></div>
+            <div class="progress-node">
+              <div class="prog-circle" id="pn-4">4</div>
+              <div class="prog-label" id="pl-4">Completed</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="status-message-box" style="padding:14px 16px; background:rgba(0, 0, 0, 0.02); border:1px dashed var(--border); border-radius:var(--radius-md); font-size:var(--text-sm); font-weight:500; color:var(--text-muted); text-align:center;">
+          Retrieving updates...
+        </div>
+
+        <!-- Rating Feedback Segment (shown if status = Completed) -->
+        <div id="rating-section" style="display:none; margin-top:28px;">
+          <div style="border-top:1px dashed var(--border); padding-top:20px;">
+            <h3 style="font-size:16px; font-weight:700; margin-bottom:4px;">Rate Our Verification Run</h3>
+            <p style="font-size:var(--text-sm); color:var(--text-muted); margin-bottom:12px;">We are dedicated to providing excellent service. How was your experience?</p>
+
+            <div class="star-row" id="star-row">
+              <button class="star-btn" data-val="1" onclick="selectRating(1)">★</button>
+              <button class="star-btn" data-val="2" onclick="selectRating(2)">★</button>
+              <button class="star-btn" data-val="3" onclick="selectRating(3)">★</button>
+              <button class="star-btn" data-val="4" onclick="selectRating(4)">★</button>
+              <button class="star-btn" data-val="5" onclick="selectRating(5)">★</button>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" style="font-size:11px;">Verification Feedback / Notes</label>
+              <textarea class="rating-textarea" id="rating-comment" placeholder="Your experience matters to us..."></textarea>
+            </div>
+
+            <button class="btn btn-primary" id="btn-submit-rating" style="margin-top:12px;" onclick="submitRating()">
+              Submit Verification Review
+            </button>
+            <div id="rating-success" style="display:none; font-size:13px; color:var(--success); font-weight:600; margin-top:12px; text-align:center;">
+              ✓ Feedback submitted successfully. Thank you!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /tab-status -->
+
+</div><!-- /screen-app -->
+
+<!-- ===========================================================================
+     PAYMENT QR MODAL (Desktop)
+     =========================================================================== -->
+<div class="modal-overlay" id="qr-modal" role="dialog" aria-modal="true" aria-label="UPI Payment Window">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeQRModal()" aria-label="Close modal">&#10005;</button>
+    <div class="modal-title">Secure Scan to Pay</div>
+    <div class="modal-amount">₹25.00</div>
+
+    <div class="qr-wrap">
+      <img id="qr-img" src="" alt="Dynamic UPI QR Code Payment Gate" />
+    </div>
+
+    <div class="upi-id">UPI: <strong>tilakinfotech@upi</strong></div>
+
+    <div class="timer-wrap">
+      <div class="timer-count" id="qr-timer">01:00</div>
+      <div style="font-size:10px; color:var(--text-hint); text-transform:uppercase; letter-spacing:0.06em; font-weight:700;">Remaining Timeout window</div>
+      <div class="timer-bar-wrap">
+        <div class="timer-bar" id="timer-bar"></div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" id="btn-paid-qr" onclick="onQRPaid()" disabled style="opacity:0.5;">
+      Confirm Payment Completed
+    </button>
+
+    <div style="font-size:10px; color:var(--text-hint); text-align:center; margin-top:12px;">
+      🔒 128-bit Encrypted Transaction Pipeline
+    </div>
+  </div>
+</div>
+
+<!-- ===========================================================================
+     COMPLAINT BUTTON (Fixed FAB)
+     =========================================================================== -->
+<a href="https://wa.me/917019631612?text=Aadhaar%20PAN%20Status%20Complaint%3A%20"
+   class="complaint-fab"
+   target="_blank"
+   rel="noopener"
+   title="File official support ticket">
+  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:14px; height:14px;">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h1.5L4 21h-1M12 3v18M18 3h1.5L19 21h-1M21 3v18" />
+  </svg>
+  <span class="fab-label">File Complaint</span>
+</a>
+
+<!-- ===========================================================================
+     JAVASCRIPT LOGIC
+     =========================================================================== -->
+<script>
+  // ── ECOSYSTEM SETTINGS CONFIGURATION (EASY PLACEHOLDERS) ──────────────────
+  const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'; // ← Paste Google Web App Deployment URL here
+  const UPI_VPA = '6362818201@okbizaxis';
+  const PRICE = 25;
+  const STORAGE_KEY = 'tilak_portal_state_v1.1';
+  
+  // Responsive Device detection
+  const isMobileDevice = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent);
+
+  // ── APP GLOBAL STATE ──────────────────────────────────────────────────────
+  let state = {
+    currentStep: 1,
+    appCode: null,
+    aadhaar: null,    // Structure: { base64, name, size }
+    pan: null,
+    payment: null,
+    contactNumber: '',
+    paymentInitiated: false,
+    isSubmitted: false,
+    savedRating: false,
+    lastSaved: null
+  };
+
+  // ── INTERACTIVE MOUSE FOCUS GLOW SPOTLIGHT ────────────────────────────────
+  document.addEventListener('mousemove', e => {
+    document.body.style.setProperty('--x', e.clientX + 'px');
+    document.body.style.setProperty('--y', e.clientY + 'px');
+  });
+
+  // ── VISUAL THEMING (Light / Dark Switcher) ────────────────────────────────
+  const themeToggleBtn = document.getElementById('theme-toggle');
+  const themeIcon = document.getElementById('theme-icon');
+
+  themeToggleBtn.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', targetTheme);
+    localStorage.setItem('theme', targetTheme);
+    updateThemeIcon(targetTheme);
+  });
+
+  function updateThemeIcon(theme) {
+    if (theme === 'light') {
+      themeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`;
+    } else {
+      themeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z" />`;
+    }
+  }
+
+  // Restore Theme on Startup
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon(savedTheme);
+
+  // ── PERSISTENCE ENGINE (localStorage State Sync) ─────────────────────────
+  function saveState() {
+    try {
+      state.lastSaved = new Date().toISOString();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch(e) {
+      console.warn('LocalStorage serialization failed: ', e);
+    }
+  }
+
+  function loadState() {
+    try {
+      const rawData = localStorage.getItem(STORAGE_KEY);
+      if (!rawData) return;
+      const parsedData = JSON.parse(rawData);
+      if (parsedData && typeof parsedData === 'object') {
+        state = { ...state, ...parsedData };
+      }
+    } catch(e) {
+      console.warn('LocalStorage deserialization failed: ', e);
+    }
+  }
+
+  function clearState() {
+    state = {
+      currentStep: 1, appCode: null, aadhaar: null, pan: null,
+      payment: null, contactNumber: '', paymentInitiated: false,
+      isSubmitted: false, savedRating: false, lastSaved: null
+    };
+    localStorage.removeItem(STORAGE_KEY);
+  }
+
+  function restoreUI() {
+    // Contact mobile restore
+    if (state.contactNumber) {
+      const contactField = document.getElementById('phone-input');
+      if (contactField) contactField.value = state.contactNumber.replace('+91', '');
+    }
+
+    // Photo draft previews restore
+    ['aadhaar', 'pan', 'payment'].forEach(documentType => {
+      if (state[documentType]) {
+        renderPhotoPreview(documentType, state[documentType].base64, state[documentType].name);
+      }
+    });
+
+    // Restore payment confirmation state
+    if (state.paymentInitiated) {
+      renderPaidConfirmBox();
+    }
+
+    // Submission step restore redirection
+    if (state.isSubmitted && state.appCode) {
+      renderSuccessScreen();
+    } else if (state.currentStep > 1) {
+      goToStep(state.currentStep, true);
+    }
+  }
+
+  // ── TRANSACTION CODE GENERATOR ──────────────────────────────────────────
+  function generateAppCode() {
+    if (state.appCode) return state.appCode;
+    state.appCode = String(Math.floor(100000 + Math.random() * 900000));
+    saveState();
+    return state.appCode;
+  }
+
+  // ── STEP PIPELINE SYSTEM ────────────────────────────────────────────────
+  function goToStep(step, skipValidation = false) {
+    if (!skipValidation) {
+      if (!validateCurrentStep(state.currentStep)) return;
+    }
+
+    document.querySelectorAll('.step-panel').forEach(panel => panel.classList.remove('active'));
+    document.getElementById('step-' + step).classList.add('active');
+
+    state.currentStep = step;
+    saveState();
+    updateStepIndicatorBar();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (step === 6) renderSuccessScreen();
+  }
+
+  function validateCurrentStep(step) {
+    if (step === 1) {
+      if (!state.aadhaar) {
+        triggerInputFieldError('aadhaar-error');
+        return false;
+      }
+    }
+    if (step === 2) {
+      if (!state.pan) {
+        triggerInputFieldError('pan-error');
+        return false;
+      }
+    }
+    if (step === 3) {
+      const phoneDigits = document.getElementById('phone-input').value.trim();
+      if (!/^\d{10}$/.test(phoneDigits)) {
+        triggerInputFieldError('phone-error');
+        return false;
+      }
+      state.contactNumber = '+91' + phoneDigits;
+      saveState();
+    }
+    if (step === 5) {
+      if (!state.payment) {
+        triggerInputFieldError('payment-error');
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function triggerInputFieldError(errorElementId) {
+    const errorEl = document.getElementById(errorElementId);
+    if (errorEl) {
+      errorEl.classList.add('show');
+      errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => errorEl.classList.remove('show'), 5000);
+    }
+  }
+
+  function updateStepIndicatorBar() {
+    for (let i = 1; i <= 5; i++) {
+      const circleNode = document.getElementById('sc-' + i);
+      const labelNode = document.getElementById('sl-' + i);
+      
+      if (!circleNode || !labelNode) continue;
+      
+      circleNode.className = 'step-circle';
+      labelNode.className = 'step-label';
+
+      if (i < state.currentStep) {
+        circleNode.classList.add('done');
+        circleNode.textContent = '✓';
+        labelNode.classList.add('done');
+      } else if (i === state.currentStep) {
+        circleNode.classList.add('active');
+        circleNode.textContent = i;
+        labelNode.classList.add('active');
+      } else {
+        circleNode.textContent = i;
+      }
+
+      // Divider connections
+      if (i < 5) {
+        const lineNode = document.getElementById('sline-' + i);
+        if (lineNode) {
+          lineNode.className = 'step-line' + (i < state.currentStep ? ' done' : '');
+        }
+      }
+    }
+  }
+
+  // ── TAB SELECT SYSTEM ───────────────────────────────────────────────────
+  function switchTab(targetTab) {
+    document.getElementById('tab-apply').style.display = targetTab === 'apply' ? '' : 'none';
+    document.getElementById('tab-status').style.display = targetTab === 'status' ? '' : 'none';
+    
+    document.getElementById('tab-btn-apply').classList.toggle('active', targetTab === 'apply');
+    document.getElementById('tab-btn-status').classList.toggle('active', targetTab === 'status');
+
+    // Auto load input if application is submitted
+    if (targetTab === 'status' && state.appCode) {
+      document.getElementById('status-code-input').value = state.appCode;
+    }
+  }
+
+  // ── DOCUMENT CAPTURE & DRAG HANDLING ────────────────────────────────────
+  function handleDragOver(e, key) {
+    e.preventDefault();
+    document.getElementById(key + '-drop-zone').classList.add('drag-over');
+  }
+  
+  function handleDragLeave(e, key) {
+    document.getElementById(key + '-drop-zone').classList.remove('drag-over');
+  }
+  
+  function handleDrop(e, key) {
+    e.preventDefault();
+    document.getElementById(key + '-drop-zone').classList.remove('drag-over');
+    const droppedFile = e.dataTransfer.files[0];
+    if (droppedFile) processDocumentFile(droppedFile, key);
+  }
+  
+  function handleFileSelect(inputElement, key) {
+    const selectedFile = inputElement.files[0];
+    if (selectedFile) processDocumentFile(selectedFile, key);
+  }
+  
+  function triggerCamera(key) {
+    document.getElementById(key + '-camera-input').click();
+  }
+  
+  function triggerGallery(key) {
+    document.getElementById(key + '-file-input').click();
+  }
+
+  function processDocumentFile(file, key) {
+    if (!file.type.startsWith('image/')) {
+      alert('Security Validation Error:\nPlease upload a valid image file structure (JPEG, PNG, or WEBP).');
+      return;
+    }
+    
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File Size Alert:\nImages must be under 5MB to guarantee robust secure uploads.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const base64Content = e.target.result;
+      state[key] = { base64: base64Content, name: file.name, size: file.size };
+      saveState();
+      renderPhotoPreview(key, base64Content, file.name);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function renderPhotoPreview(key, base64, filename) {
+    const previewWrap = document.getElementById(key + '-preview-wrap');
+    const previewImg = document.getElementById(key + '-preview-img');
+    const previewFileName = document.getElementById(key + '-file-name');
+    const dropZone = document.getElementById(key + '-drop-zone');
+    const mobileUploadControls = document.getElementById(key + '-mobile-btns');
+
+    if (previewImg) previewImg.src = base64;
+    if (previewFileName) previewFileName.textContent = filename;
+    if (previewWrap) previewWrap.classList.add('show');
+    if (dropZone) dropZone.style.display = 'none';
+    if (mobileUploadControls) mobileUploadControls.style.display = 'none';
+  }
+
+  function removeUpload(key) {
+    state[key] = null;
+    saveState();
+
+    const previewWrap = document.getElementById(key + '-preview-wrap');
+    const dropZone = document.getElementById(key + '-drop-zone');
+    const mobileUploadControls = document.getElementById(key + '-mobile-btns');
+
+    if (previewWrap) previewWrap.classList.remove('show');
+    
+    if (isMobileDevice) {
+      if (mobileUploadControls) mobileUploadControls.style.display = '';
+    } else {
+      if (dropZone) dropZone.style.display = '';
+    }
+  }
+
+  // ── UPI DYNAMIC SYSTEM ──────────────────────────────────────────────────
+  let upiCountSeconds = 60;
+  let upiTimerRef = null;
+
+  function openQRModal() {
+    const referenceCode = generateAppCode();
+    state.paymentInitiated = true;
+    saveState();
+
+    // Dynamically build QR Payload containing EXACT amount and application reference
+    const upiLinkPayload = `upi://pay?pa=${encodeURIComponent(UPI_VPA)}&pn=Tilak%20Infotech&am=${PRICE}&cu=INR&tn=Verification_${referenceCode}`;
+    const generatedQRURL = `https://api.qrserver.com/v1/create-qr-code/?size=210x210&data=${encodeURIComponent(upiLinkPayload)}`;
+    
+    document.getElementById('qr-img').src = generatedQRURL;
+    document.getElementById('qr-modal').classList.add('show');
+    
+    triggerModalTimer();
+  }
+
+  function closeQRModal() {
+    document.getElementById('qr-modal').classList.remove('show');
+    clearInterval(upiTimerRef);
+  }
+
+  function triggerModalTimer() {
+    upiCountSeconds = 60;
+    const timerLabel = document.getElementById('qr-timer');
+    const timerProgressBar = document.getElementById('timer-bar');
+    const confirmPaidBtn = document.getElementById('btn-paid-qr');
+
+    confirmPaidBtn.disabled = true;
+    confirmPaidBtn.style.opacity = '0.5';
+
+    // Enable payment confirm button after 10s safeguard to prevent accidental clicks
+    setTimeout(() => {
+      if (confirmPaidBtn) {
+        confirmPaidBtn.disabled = false;
+        confirmPaidBtn.style.opacity = '1';
+      }
+    }, 10000);
+
+    if (timerLabel) timerLabel.textContent = '01:00';
+    if (timerProgressBar) timerProgressBar.style.width = '100%';
+
+    clearInterval(upiTimerRef);
+    upiTimerRef = setInterval(() => {
+      upiCountSeconds--;
+      const min = Math.floor(upiCountSeconds / 60);
+      const sec = upiCountSeconds % 60;
+      
+      if (timerLabel) timerLabel.textContent = `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+      if (timerProgressBar) timerProgressBar.style.width = (upiCountSeconds / 60 * 100) + '%';
+
+      if (upiCountSeconds <= 0) {
+        clearInterval(upiTimerRef);
+        if (timerLabel) timerLabel.textContent = '00:00';
+      }
+    }, 1000);
+  }
+
+  function onQRPaid() {
+    closeQRModal();
+    renderPaidConfirmBox();
+  }
+
+  function onMobilePayClick(event) {
+    event.preventDefault();
+    const referenceCode = generateAppCode();
+    state.paymentInitiated = true;
+    saveState();
+
+    // Mobile Deep Link launch
+    const upiLink = `upi://pay?pa=${encodeURIComponent(UPI_VPA)}&pn=Tilak%20Infotech&am=${PRICE}&cu=INR&tn=Verification_${referenceCode}`;
+    window.location.href = upiLink;
+
+    setTimeout(renderPaidConfirmBox, 2000);
+  }
+
+  function renderPaidConfirmBox() {
+    const confirmBox = document.getElementById('paid-confirm');
+    if (confirmBox) confirmBox.style.display = 'block';
+  }
+
+  // ── SECURE TRANSACTION TRANSMISSION (POST Payload API) ──────────────────
+  async function submitApplication() {
+    if (!state.payment) {
+      triggerInputFieldError('payment-error');
+      return;
+    }
+
+    const applicationCode = generateAppCode();
+
+    // UI Loading state switchover
+    document.getElementById('btn-submit').style.display = 'none';
+    document.getElementById('submit-loading').style.display = 'block';
+
+    const payload = {
+      action: 'submit',
+      appCode: applicationCode,
+      contactNumber: state.contactNumber,
+      aadhaarPhoto: state.aadhaar ? state.aadhaar.base64 : '',
+      panPhoto: state.pan ? state.pan.base64 : '',
+      paymentScreenshot: state.payment ? state.payment.base64 : '',
+      submittedAt: new Date().toISOString()
+    };
+
+    try {
+      const response = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        state.isSubmitted = true;
+        saveState();
+        goToStep(6, true);
+      } else {
+        throw new Error(result.error || 'Failed cloud database connection.');
+      }
+    } catch(err) {
+      console.error('Portal submit error: ', err);
+      alert('Secure Connection Failed:\nSubmission failed. The portal is currently running in test mode. Feel free to download resources via settings or run standard setups!');
+      document.getElementById('btn-submit').style.display = '';
+      document.getElementById('submit-loading').style.display = 'none';
+    }
+  }
+
+  // ── RENDER SYSTEM SUCCESS PANEL ──────────────────────────────────────────
+  function renderSuccessScreen() {
+    document.querySelectorAll('.step-panel').forEach(panel => panel.classList.remove('active'));
+    document.getElementById('step-6').classList.add('active');
+    
+    const successCodeDisplay = document.getElementById('success-code');
+    if (successCodeDisplay && state.appCode) successCodeDisplay.textContent = state.appCode;
+    
+    // Hide progress bar index on successful transaction completion
+    document.getElementById('step-indicator').style.display = 'none';
+  }
+
+  function copyCode() {
+    if (state.appCode) {
+      navigator.clipboard.writeText(state.appCode).then(() => {
+        const copyBtn = document.getElementById('btn-copy-code');
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = '✓ Copied!';
+        setTimeout(() => copyBtn.textContent = originalText, 2000);
+      }).catch(() => {
+        alert(`Application Code: ${state.appCode}`);
+      });
+    }
+  }
+
+  // ── LIVE PIPELINE TRACKER (GET Request API) ──────────────────────────────
+  async function checkStatus() {
+    const code = document.getElementById('status-code-input').value.trim();
+    const errorEl = document.getElementById('status-error');
+    const resultBox = document.getElementById('status-result');
+    const loadingBox = document.getElementById('status-loading');
+
+    if (!/^\d{6}$/.test(code)) {
+      errorEl.textContent = '⚠ Verification Error: Please enter a valid 6-digit application code.';
+      errorEl.classList.add('show');
+      return;
+    }
+    errorEl.classList.remove('show');
+    resultBox.style.display = 'none';
+    loadingBox.style.display = 'block';
+
+    try {
+      const response = await fetch(`${APPS_SCRIPT_URL}?action=status&code=${code}`);
+      const data = await response.json();
+      
+      loadingBox.style.display = 'none';
+
+      if (!data.success) {
+        errorEl.textContent = '⚠ Database Query Alert: Application tracking reference code not found.';
+        errorEl.classList.add('show');
+        return;
+      }
+
+      renderEcosystemStatus(data);
+    } catch(err) {
+      loadingBox.style.display = 'none';
+      errorEl.textContent = '⚠ Test System Notice: Apps Script API is not initialized yet. Please follow the SETUP_GUIDE.md documentation to deploy your database spreadsheet backend.';
+      errorEl.classList.add('show');
+    }
+  }
+
+  function renderEcosystemStatus(data) {
+    document.getElementById('res-code').textContent = data.appCode;
+    document.getElementById('res-submitted').textContent = data.submittedAt || '—';
+    document.getElementById('res-contact').textContent = data.contactNumber || '—';
+    
+    const badgeEl = document.getElementById('res-status');
+    badgeEl.textContent = data.status;
+    badgeEl.className = 'status-badge';
+    
+    if (data.status === 'Completed') {
+      badgeEl.classList.add('success-badge');
+    }
+
+    // Admin Custom Notes Resolution
+    const notesRow = document.getElementById('res-notes-row');
+    if (data.adminNotes) {
+      document.getElementById('res-notes').textContent = data.adminNotes;
+      notesRow.style.display = '';
+    } else {
+      notesRow.style.display = 'none';
+    }
+
+    // Interactive step progress tracking
+    const pipelineStep = data.statusStep || 1;
+    for (let i = 1; i <= 4; i++) {
+      const progCircle = document.getElementById('pn-' + i);
+      const progLabel = document.getElementById('pl-' + i);
+      
+      if (!progCircle || !progLabel) continue;
+      
+      progCircle.className = 'prog-circle';
+      progLabel.className = 'prog-label';
+
+      if (i < pipelineStep) {
+        progCircle.classList.add('done');
+        progCircle.textContent = '✓';
+        progLabel.classList.add('done');
+      } else if (i === pipelineStep) {
+        progCircle.classList.add('active');
+        progCircle.textContent = i;
+        progLabel.classList.add('active');
+      } else {
+        progCircle.textContent = i;
+      }
+
+      // Line rendering connections
+      if (i < 4) {
+        const lineNode = document.getElementById('pline-' + i);
+        if (lineNode) {
+          lineNode.className = 'prog-line' + (i < pipelineStep ? ' done' : '');
+        }
+      }
+    }
+
+    // Text status description mapping
+    const statusDispatches = {
+      'Submitted': 'Verification query received. Currently validating transaction receipt...',
+      'Payment Verified': 'Transaction confirmed! Document manual checks are being queued.',
+      'Under Review': 'Manual checking active. Verification agents are validating link registry...',
+      'Completed': '✓ Status Report successfully processed! Check your WhatsApp PDF report.',
+      'Rejected': 'Verification query failed validation checks. Please connect via WhatsApp support.'
+    };
+    
+    const statusMsgBox = document.getElementById('status-message-box');
+    if (statusMsgBox) {
+      statusMsgBox.textContent = statusDispatches[data.status] || 'Processing document status queries...';
+    }
+
+    // Render Star feedback form only on Completed statuses
+    const starSection = document.getElementById('rating-section');
+    if (data.status === 'Completed' && !state.savedRating) {
+      starSection.style.display = 'block';
+    } else {
+      starSection.style.display = 'none';
+    }
+
+    const resultBox = document.getElementById('status-result');
+    resultBox.style.display = 'block';
+    resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ── USER FEEDBACK SYSTEM ────────────────────────────────────────────────
+  let selectedFeedbackRating = 0;
+  
+  function selectRating(starsCount) {
+    selectedFeedbackRating = starsCount;
+    document.querySelectorAll('.star-btn').forEach((button, index) => {
+      button.classList.toggle('selected', index < starsCount);
+    });
+  }
+
+  async function submitRating() {
+    if (!selectedFeedbackRating) {
+      alert('Please select a star rating level.');
+      return;
+    }
+    
+    const code = document.getElementById('status-code-input').value.trim();
+    const comment = document.getElementById('rating-comment').value.trim();
+    const submitBtn = document.getElementById('btn-submit-rating');
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting Feedback...';
+
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'rating',
+          appCode: code,
+          rating: selectedFeedbackRating,
+          comment: comment
+        })
+      });
+      state.savedRating = true;
+      saveState();
+      
+      document.getElementById('rating-success').style.display = 'block';
+      submitBtn.style.display = 'none';
+    } catch(e) {
+      alert('Feedback submission complete on client side.');
+      state.savedRating = true;
+      saveState();
+      document.getElementById('rating-success').style.display = 'block';
+      submitBtn.style.display = 'none';
+    }
+  }
+
+  // ── ONBOARD REDIRECTION PANEL ───────────────────────────────────────────
+  function triggerSystemApp(startOnStatusTab) {
+    document.getElementById('screen-onboard').classList.remove('active');
+    document.getElementById('screen-app').classList.add('active');
+    
+    if (startOnStatusTab) {
+      switchTab('status');
+    }
+  }
+
+  // ── RESPONSIVE COMPONENT ADJUSTMENTS ────────────────────────────────────
+  function applySystemDeviceCSS() {
+    document.querySelectorAll('.desktop-only').forEach(el => {
+      el.style.display = isMobileDevice ? 'none' : '';
+    });
+    document.querySelectorAll('.mobile-only').forEach(el => {
+      el.style.display = isMobileDevice ? '' : 'none';
+    });
+  }
+
+  // ── STARTUP INITIALIZATION SEQUENCE ─────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    loadState();
+    applySystemDeviceCSS();
+
+    // Event Bindings
+    document.getElementById('btn-begin').addEventListener('click', () => triggerSystemApp(false));
+    document.getElementById('link-check-status').addEventListener('click', (e) => {
+      e.preventDefault();
+      triggerSystemApp(true);
+    });
+
+    // Auto-recovery checks for ongoing sessions
+    if (state.isSubmitted && state.appCode) {
+      triggerSystemApp(false);
+    } else if (state.currentStep > 1 || state.aadhaar || state.pan) {
+      triggerSystemApp(false);
+      restoreUI();
+    }
+
+    // Auto-save phone numbers on input
+    const phoneInput = document.getElementById('phone-input');
+    if (phoneInput) {
+      phoneInput.addEventListener('input', function() {
+        state.contactNumber = '+91' + this.value.trim();
+        saveState();
+      });
+    }
+  });
+
+  // State safeguards on system exit
+  window.addEventListener('beforeunload', saveState);
+  window.addEventListener('visibilitychange', saveState);
+  window.addEventListener('pagehide', saveState);
+</script>
+
+</body>
+</html>
